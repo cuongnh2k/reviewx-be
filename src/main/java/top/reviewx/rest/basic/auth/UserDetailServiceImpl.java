@@ -22,7 +22,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByLocal_Email(email);
         if (userEntity == null) {
-            throw new BusinessLogicException();
+            throw new BusinessLogicException(-2);
         }
         return new User(userEntity.getLocal().getEmail(),
                 userEntity.getLocal().getPassword(),

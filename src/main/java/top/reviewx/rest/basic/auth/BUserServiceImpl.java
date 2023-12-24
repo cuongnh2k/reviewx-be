@@ -77,11 +77,11 @@ public class BUserServiceImpl implements BUserService {
         try {
             daoAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new BusinessLogicException();
+            throw new BusinessLogicException(-3);
         }
         UserEntity userEntity = bUserRepository.findByLocal_Email(req.getEmail());
         if (!userEntity.getLocal().getIsActive()) {
-            throw new BusinessLogicException();
+            throw new BusinessLogicException(-4);
         }
         return new SignInRes(JWT.create()
                 .withSubject(userEntity.getId())
@@ -94,10 +94,10 @@ public class BUserServiceImpl implements BUserService {
     public UserRes active(ActiveUserReq req) {
         UserEntity userEntity = bUserRepository.findByLocal_Email(req.getEmail());
         if (userEntity == null) {
-            throw new BusinessLogicException();
+            throw new BusinessLogicException(-5);
         }
         if (!req.getVerifyToken().equals(userEntity.getLocal().getVerifyToken())) {
-            throw new BusinessLogicException();
+            throw new BusinessLogicException(-6);
         }
         userEntity.getLocal().setIsActive(true);
         userEntity.setUpdatedAt(LocalDateTime.now());
@@ -108,7 +108,7 @@ public class BUserServiceImpl implements BUserService {
     public UserRes resetPassword(ResetPasswordReq req) {
         UserEntity userEntity = bUserRepository.findByLocal_Email(req.getEmail());
         if (userEntity == null) {
-            throw new BusinessLogicException();
+            throw new BusinessLogicException(-7);
         }
         String newPassword = RandomStringUtils.random(5, "1234567890")
                 + RandomStringUtils.random(1, "qwertyuiop")
