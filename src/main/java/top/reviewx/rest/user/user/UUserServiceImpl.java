@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import top.reviewx.core.common.CommonAuthContext;
 import top.reviewx.core.exception.BusinessLogicException;
-import top.reviewx.mapper.UserMapper;
 import top.reviewx.entities.user.UserEntity;
+import top.reviewx.mapper.UserMapper;
 import top.reviewx.rest.user.user.dto.req.UpdateUserReq;
 import top.reviewx.rest.user.user.dto.res.UserRes;
 
@@ -37,13 +37,13 @@ public class UUserServiceImpl implements UUserService {
     @Override
     public UserRes updateUser(UpdateUserReq req) {
         UserEntity userEntity = uUserRepository.findById(authContext.getId()).orElse(null);
-        assert userEntity != null;
+
         if (StringUtils.hasText(req.getNewPassword())) {
             try {
                 daoAuthenticationProvider.authenticate(
                         new UsernamePasswordAuthenticationToken(userEntity.getLocal().getEmail(), req.getOldPassword()));
             } catch (BadCredentialsException e) {
-                throw new BusinessLogicException();
+                throw new BusinessLogicException(-8);
             }
             userEntity.getLocal().setPassword(passwordEncoder.encode(req.getNewPassword()));
             userEntity.setUpdatedAt(LocalDateTime.now());
@@ -56,6 +56,7 @@ public class UUserServiceImpl implements UUserService {
             userEntity.getLocal().setAvatar(req.getAvatar());
             userEntity.setUpdatedAt(LocalDateTime.now());
         }
-        return userMapper.toUserRes(uUserRepository.save(userEntity));
+        uUserRepository.save(userEntity);
+        return userMapper.toUserRes(userEntity);
     }
 }

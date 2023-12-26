@@ -24,7 +24,6 @@ public class UUserController {
     @PatchMapping
     public ResponseEntity<CommonResponse> updateUser(@RequestBody @Valid UpdateUserReq req,
                                                      @RequestHeader(name = "api-key") @NotBlank String apiKey) {
-        uUserService.updateUser(req);
         return CommonResponse.success(uUserService.updateUser(req));
     }
 }
