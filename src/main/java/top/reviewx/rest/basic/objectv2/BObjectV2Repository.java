@@ -13,5 +13,9 @@ public interface BObjectV2Repository extends MongoRepository<ObjectV2Entity, Str
 
     Page<ObjectV2Entity> findByCategoryIdAndIsDeleteFalse(String categoryId, Pageable pageable);
 
+    Page<ObjectV2Entity> findByNameContainingAndIsDeleteFalse(String name, Pageable pageable);
+
+    Page<ObjectV2Entity> findByIsDeleteFalse(Pageable pageable);
+
     ObjectV2Entity findByIdAndIsDeleteFalse(String id);
 }

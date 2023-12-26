@@ -31,10 +31,14 @@ public class BObjectV2ServiceImpl implements BObjectV2Service {
     @Transactional(readOnly = true)
     public CommonListResponse<ObjectV2Res> getListObjectV2(String categoryId, String name, Pageable pageable) {
         Page<ObjectV2Entity> objectV2EntityPage;
-        if (StringUtils.hasText(name)) {
+        if (StringUtils.hasText(categoryId) && StringUtils.hasText(name)) {
             objectV2EntityPage = bObjectV2Repository.findByCategoryIdAndNameContainingAndIsDeleteFalse(categoryId, name, pageable);
-        } else {
+        } else if (StringUtils.hasText(categoryId)) {
             objectV2EntityPage = bObjectV2Repository.findByCategoryIdAndIsDeleteFalse(categoryId, pageable);
+        } else if (StringUtils.hasText(name)) {
+            objectV2EntityPage = bObjectV2Repository.findByNameContainingAndIsDeleteFalse(name, pageable);
+        } else {
+            objectV2EntityPage = bObjectV2Repository.findByIsDeleteFalse(pageable);
         }
         return CommonListResponse.<ObjectV2Res>builder()
                 .content(objectV2EntityPage.getContent().stream()

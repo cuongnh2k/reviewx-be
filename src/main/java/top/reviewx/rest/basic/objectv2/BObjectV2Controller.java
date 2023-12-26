@@ -17,7 +17,7 @@ public class BObjectV2Controller {
     private final BObjectV2Service bObjectV2Service;
 
     @GetMapping
-    public ResponseEntity<CommonResponse> getListObjectV2(@RequestParam String categoryId,
+    public ResponseEntity<CommonResponse> getListObjectV2(@RequestParam(defaultValue = "") String categoryId,
                                                           @RequestParam(defaultValue = "") String name,
                                                           @RequestParam(defaultValue = "0") Integer pageNumber,
                                                           @RequestParam(defaultValue = "10") Integer pageSize,
