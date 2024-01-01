@@ -13,7 +13,7 @@ import top.reviewx.rest.basic.review.dto.res.ReviewRes;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-01-01T18:14:34+0700",
+    date = "2024-01-02T02:10:23+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.9 (JetBrains s.r.o.)"
 )
 @Component
@@ -51,8 +51,8 @@ public class ReviewMapperImpl extends ReviewMapper {
         reactionRes.name( reactionEntity.getName() );
         reactionRes.avatar( reactionEntity.getAvatar() );
         reactionRes.isLike( reactionEntity.getIsLike() );
-        reactionRes.createdAt( reactionEntity.getCreatedAt() );
-        reactionRes.updatedAt( reactionEntity.getUpdatedAt() );
+        reactionRes.createdAt( map( reactionEntity.getCreatedAt() ) );
+        reactionRes.updatedAt( map( reactionEntity.getUpdatedAt() ) );
 
         return reactionRes.build();
     }

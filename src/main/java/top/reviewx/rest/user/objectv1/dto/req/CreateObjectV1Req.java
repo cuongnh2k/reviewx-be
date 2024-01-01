@@ -14,14 +14,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateObjectV1Req {
-    @Size(min = 36, max = 36)
     private String objectId;
     @NotBlank
     @Size(min = 36)
     private String categoryId;
     @NotBlank
     private String name;
-    @NotBlank
     private String avatar;
     @NotBlank
     private String address;

@@ -40,6 +40,11 @@ public class UReviewServiceImpl implements UReviewService {
             reviewEntity.setRate(req.getRate());
             reviewEntity.setContent(req.getContent());
             reviewEntity.setUpdatedAt(LocalDateTime.now());
+            reviewEntity.setCreatedBy(BaseCreatedBy.builder()
+                    .id(authContext.getId())
+                    .name(authContext.getName())
+                    .avatar(authContext.getAvatar())
+                    .build());
         } else {
             reviewEntity = ReviewEntity.builder()
                     .id(UUID.randomUUID().toString())
@@ -49,7 +54,7 @@ public class UReviewServiceImpl implements UReviewService {
                     .createdBy(BaseCreatedBy.builder()
                             .id(authContext.getId())
                             .name(authContext.getName())
-                            .name(authContext.getAvatar())
+                            .avatar(authContext.getAvatar())
                             .build())
                     .isDelete(false)
                     .build();

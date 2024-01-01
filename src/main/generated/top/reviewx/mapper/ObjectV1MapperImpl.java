@@ -11,7 +11,7 @@ import top.reviewx.rest.user.objectv1.dto.res.ObjectV1Res;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-01-01T18:14:34+0700",
+    date = "2024-01-02T02:10:23+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.9 (JetBrains s.r.o.)"
 )
 @Component
@@ -51,8 +51,8 @@ public class ObjectV1MapperImpl extends ObjectV1Mapper {
         noteRes.name( noteEntity.getName() );
         noteRes.avatar( noteEntity.getAvatar() );
         noteRes.content( noteEntity.getContent() );
-        noteRes.createdAt( noteEntity.getCreatedAt() );
-        noteRes.updatedAt( noteEntity.getUpdatedAt() );
+        noteRes.createdAt( map( noteEntity.getCreatedAt() ) );
+        noteRes.updatedAt( map( noteEntity.getUpdatedAt() ) );
 
         return noteRes.build();
     }

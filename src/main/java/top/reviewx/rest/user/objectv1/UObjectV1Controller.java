@@ -51,4 +51,11 @@ public class UObjectV1Controller {
                                                          @RequestHeader(name = "api-key") @NotBlank String apiKey) {
         return CommonResponse.success(uObjectV1Service.updateObjectV1User(id, req));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CommonResponse> deleteObjectV1(@PathVariable @NotBlank @Size(min = 36, max = 36) String id,
+                                                         @RequestHeader(name = "api-key") @NotBlank String apiKey) {
+        uObjectV1Service.deleteObjectV1User(id);
+        return CommonResponse.success("");
+    }
 }

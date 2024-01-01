@@ -8,18 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import top.reviewx.core.base.BaseCreatedBy;
-import top.reviewx.core.base.BaseEntity;
 import top.reviewx.core.common.CommonAuthContext;
 import top.reviewx.core.common.CommonListResponse;
 import top.reviewx.core.enums.ObjectV1StatusEnum;
-import top.reviewx.core.enums.RoleEnum;
 import top.reviewx.core.exception.BusinessLogicException;
 import top.reviewx.entities.notification.NotificationEntity;
-import top.reviewx.mapper.ObjectV1Mapper;
-import top.reviewx.core.utils.BeanCopyUtil;
 import top.reviewx.entities.object1.NoteEntity;
 import top.reviewx.entities.object1.ObjectV1Entity;
 import top.reviewx.entities.object2.ObjectV2Entity;
+import top.reviewx.mapper.ObjectV1Mapper;
 import top.reviewx.rest.admin.objectv1.dto.req.UpdateObjectV1AdminReq;
 import top.reviewx.rest.user.objectv1.dto.res.ObjectV1Res;
 
@@ -81,11 +78,7 @@ public class AObjectV1ServiceImpl implements AObjectV1Service {
         }
         return CommonListResponse.<ObjectV1Res>builder()
                 .content(objectV1EntityPage.getContent().stream()
-                        .map(o -> {
-                            ObjectV1Res res = new ObjectV1Res();
-                            BeanCopyUtil.copyProperties(res, o);
-                            return res;
-                        })
+                        .map(objectV1Mapper::toObjectV1Res)
                         .collect(Collectors.toList()))
                 .totalElements(objectV1EntityPage.getTotalElements())
                 .totalPages(objectV1EntityPage.getTotalPages())

@@ -13,5 +13,7 @@ public interface UObjectV1Service {
 
     ObjectV1Res updateObjectV1User(String id, UpdateObjectV1UserReq req);
 
+    void deleteObjectV1User(String id);
+
     ObjectV1Res getOneObjectV1User(String id);
 }

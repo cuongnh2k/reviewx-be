@@ -22,6 +22,7 @@ public class ObjectV1Entity extends BaseEntity {
     private String name;
     private String avatar;
     private String address;
+    private Boolean isDelete;
     private ObjectV1StatusEnum status;
     private List<NoteEntity> notes;
     private BaseCreatedBy createdBy;
