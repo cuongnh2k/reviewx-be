@@ -16,7 +16,6 @@ import top.reviewx.rest.basic.objectv2.dto.res.ObjectV2Res;
 import top.reviewx.rest.basic.review.BReviewRepository;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,9 +61,11 @@ public class BObjectV2ServiceImpl implements BObjectV2Service {
 
         List<ReviewEntity> reviewEntities = bReviewRepository.findByObjectIdAndIsDeleteFalse(id);
         if (!CollectionUtils.isEmpty(reviewEntities)) {
-            AtomicInteger sum = new AtomicInteger();
-            reviewEntities.forEach(o -> sum.addAndGet(o.getRate()));
-            objectV2Res.setAverageRating(sum.floatValue() / (float) reviewEntities.size());
+            float sum = 0;
+            for (ReviewEntity o : reviewEntities) {
+                sum += o.getRate();
+            }
+            objectV2Res.setAverageRating(sum / (float) reviewEntities.size());
         }
         return objectV2Res;
     }

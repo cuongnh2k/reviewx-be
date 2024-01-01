@@ -17,7 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class ReviewEntity extends BaseEntity {
     private String objectId;
-    private Integer rate;
+    private Float rate;
     private String content;
     private List<ReactionEntity> reactions;
     private BaseCreatedBy createdBy;
