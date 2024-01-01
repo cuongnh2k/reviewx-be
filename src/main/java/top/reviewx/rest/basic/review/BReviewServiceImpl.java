@@ -32,11 +32,7 @@ public class BReviewServiceImpl implements BReviewService {
         }
         return CommonListResponse.<ReviewRes>builder()
                 .content(reviewEntityPage.getContent().stream()
-                        .map(o -> {
-                            ReviewRes res = new ReviewRes();
-                            BeanCopyUtil.copyProperties(res, o);
-                            return res;
-                        })
+                        .map(reviewMapper::toReviewRes)
                         .collect(Collectors.toList()))
                 .totalElements(reviewEntityPage.getTotalElements())
                 .totalPages(reviewEntityPage.getTotalPages())

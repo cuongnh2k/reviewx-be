@@ -17,7 +17,7 @@ public class CreateReviewReq {
     private String objectId;
     @Max(5)
     @Min(0)
-    private Float rate;
+    private float rate;
     @NotBlank
     private String content;
 }

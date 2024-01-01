@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class ReviewRes extends BaseResponse {
     private String objectId;
-    private Integer rate;
+    private float rate;
     private String content;
     private List<ReactionRes> reactions;
     private BaseCreatedBy createdBy;
