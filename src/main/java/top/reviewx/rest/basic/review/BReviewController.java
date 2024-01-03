@@ -15,7 +15,7 @@ public class BReviewController {
 
     @GetMapping
     public ResponseEntity<CommonResponse> getListReview(@RequestParam String objectId,
-                                                        @RequestParam(required = false) Integer rate,
+                                                        @RequestParam(required = false) Float rate,
                                                         @RequestParam(defaultValue = "0") Integer pageNumber,
                                                         @RequestParam(defaultValue = "10") Integer pageSize,
                                                         @RequestParam(defaultValue = "") String sort,

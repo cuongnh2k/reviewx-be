@@ -23,7 +23,7 @@ public class BReviewServiceImpl implements BReviewService {
 
     @Override
     @Transactional(readOnly = true)
-    public CommonListResponse<ReviewRes> getListReview(String objectId, Integer rate, Pageable pageable) {
+    public CommonListResponse<ReviewRes> getListReview(String objectId, Float rate, Pageable pageable) {
         Page<ReviewEntity> reviewEntityPage;
         if (rate != null) {
             reviewEntityPage = bReviewRepository.findByObjectIdAndRateAndIsDeleteFalse(objectId, rate, pageable);

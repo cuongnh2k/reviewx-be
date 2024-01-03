@@ -38,43 +38,50 @@ public class AObjectV1ServiceImpl implements AObjectV1Service {
 
     @Override
     @Transactional(readOnly = true)
-    public CommonListResponse<ObjectV1Res> getListObjectV1Admin(String categoryId, String objectId, String name, Pageable pageable) {
+    public CommonListResponse<ObjectV1Res> getListObjectV1Admin(String categoryId, String objectId, String name, ObjectV1StatusEnum status, Pageable pageable) {
         Page<ObjectV1Entity> objectV1EntityPage;
         if (StringUtils.hasText(categoryId) && StringUtils.hasText(name) && StringUtils.hasText(objectId)) {
-            objectV1EntityPage = aObjectV1Repository.findByCategoryIdAndObjectIdAndNameContaining(
+            objectV1EntityPage = aObjectV1Repository.findByCategoryIdAndObjectIdAndNameContainingAndStatus(
                     categoryId,
                     objectId,
                     name,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(categoryId) && StringUtils.hasText(objectId)) {
-            objectV1EntityPage = aObjectV1Repository.findByCategoryIdAndObjectId(
+            objectV1EntityPage = aObjectV1Repository.findByCategoryIdAndObjectIdAndStatus(
                     categoryId,
                     objectId,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(categoryId) && StringUtils.hasText(name)) {
-            objectV1EntityPage = aObjectV1Repository.findByCategoryIdAndNameContaining(
+            objectV1EntityPage = aObjectV1Repository.findByCategoryIdAndNameContainingAndStatus(
                     categoryId,
                     name,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(objectId) && StringUtils.hasText(name)) {
-            objectV1EntityPage = aObjectV1Repository.findByObjectIdAndNameContaining(
+            objectV1EntityPage = aObjectV1Repository.findByObjectIdAndNameContainingAndStatus(
                     objectId,
                     name,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(categoryId)) {
-            objectV1EntityPage = aObjectV1Repository.findByCategoryId(
+            objectV1EntityPage = aObjectV1Repository.findByCategoryIdAndStatus(
                     categoryId,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(objectId)) {
-            objectV1EntityPage = aObjectV1Repository.findByObjectId(
+            objectV1EntityPage = aObjectV1Repository.findByObjectIdAndStatus(
                     objectId,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(name)) {
-            objectV1EntityPage = aObjectV1Repository.findByNameContaining(
+            objectV1EntityPage = aObjectV1Repository.findByNameContainingAndStatus(
                     name,
+                    status,
                     pageable);
         } else {
-            objectV1EntityPage = aObjectV1Repository.findAll(pageable);
+            objectV1EntityPage = aObjectV1Repository.findByStatus(status, pageable);
         }
         return CommonListResponse.<ObjectV1Res>builder()
                 .content(objectV1EntityPage.getContent().stream()

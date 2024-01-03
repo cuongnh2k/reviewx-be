@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.reviewx.core.common.CommonResponse;
+import top.reviewx.core.enums.ObjectV1StatusEnum;
 import top.reviewx.core.utils.PageableUtil;
 import top.reviewx.rest.user.objectv1.dto.req.CreateObjectV1Req;
 import top.reviewx.rest.user.objectv1.dto.req.UpdateObjectV1UserReq;
@@ -29,6 +30,7 @@ public class UObjectV1Controller {
     public ResponseEntity<CommonResponse> getListObjectV1User(@RequestParam(defaultValue = "") String categoryId,
                                                               @RequestParam(defaultValue = "") String objectId,
                                                               @RequestParam(defaultValue = "") String name,
+                                                              @RequestParam ObjectV1StatusEnum status,
                                                               @RequestParam(defaultValue = "0") Integer pageNumber,
                                                               @RequestParam(defaultValue = "10") Integer pageSize,
                                                               @RequestParam(defaultValue = "") String sort,
@@ -36,6 +38,7 @@ public class UObjectV1Controller {
         return CommonResponse.success(uObjectV1Service.getListObjectV1User(categoryId,
                 objectId,
                 name,
+                status,
                 new PageableUtil().buildPageable(pageNumber, pageSize, sort)));
     }
 

@@ -82,43 +82,50 @@ public class UObjectV1ServiceImpl implements UObjectV1Service {
 
     @Override
     @Transactional(readOnly = true)
-    public CommonListResponse<ObjectV1Res> getListObjectV1User(String categoryId, String objectId, String name, Pageable pageable) {
+    public CommonListResponse<ObjectV1Res> getListObjectV1User(String categoryId, String objectId, String name, ObjectV1StatusEnum status, Pageable pageable) {
         Page<ObjectV1Entity> objectV1EntityPage;
         if (StringUtils.hasText(categoryId) && StringUtils.hasText(name) && StringUtils.hasText(objectId)) {
-            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndCategoryIdAndObjectIdAndNameContainingAndIsDeleteFalse(authContext.getId(),
+            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndCategoryIdAndObjectIdAndNameContainingAndStatusAndIsDeleteFalse(authContext.getId(),
                     categoryId,
                     objectId,
                     name,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(categoryId) && StringUtils.hasText(objectId)) {
-            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndCategoryIdAndObjectIdAndIsDeleteFalse(authContext.getId(),
+            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndCategoryIdAndObjectIdAndStatusAndIsDeleteFalse(authContext.getId(),
                     categoryId,
                     objectId,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(categoryId) && StringUtils.hasText(name)) {
-            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndCategoryIdAndNameContainingAndIsDeleteFalse(authContext.getId(),
+            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndCategoryIdAndNameContainingAndStatusAndIsDeleteFalse(authContext.getId(),
                     categoryId,
                     name,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(objectId) && StringUtils.hasText(name)) {
-            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndObjectIdAndNameContainingAndIsDeleteFalse(authContext.getId(),
+            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndObjectIdAndNameContainingAndStatusAndIsDeleteFalse(authContext.getId(),
                     objectId,
                     name,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(categoryId)) {
-            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndCategoryIdAndIsDeleteFalse(authContext.getId(),
+            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndCategoryIdAndStatusAndIsDeleteFalse(authContext.getId(),
                     categoryId,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(objectId)) {
-            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndObjectIdAndIsDeleteFalse(authContext.getId(),
+            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndObjectIdAndStatusAndIsDeleteFalse(authContext.getId(),
                     objectId,
+                    status,
                     pageable);
         } else if (StringUtils.hasText(name)) {
-            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndNameContainingAndIsDeleteFalse(authContext.getId(),
+            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndNameContainingAndStatusAndIsDeleteFalse(authContext.getId(),
                     name,
+                    status,
                     pageable);
         } else {
-            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndIsDeleteFalse(authContext.getId(), pageable);
+            objectV1EntityPage = uObjectV1Repository.findByCreatedBy_IdAndStatusAndIsDeleteFalse(authContext.getId(), status, pageable);
         }
         return CommonListResponse.<ObjectV1Res>builder()
                 .content(objectV1EntityPage.getContent().stream()

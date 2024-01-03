@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface BReviewRepository extends MongoRepository<ReviewEntity, String> {
-    Page<ReviewEntity> findByObjectIdAndRateAndIsDeleteFalse(String object, Integer rate, Pageable pageable);
+    Page<ReviewEntity> findByObjectIdAndRateAndIsDeleteFalse(String object, Float rate, Pageable pageable);
 
     Page<ReviewEntity> findByObjectIdAndIsDeleteFalse(String object, Pageable pageable);
 

@@ -30,6 +30,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -87,6 +88,7 @@ public class BUserServiceImpl implements BUserService {
                 .withSubject(userEntity.getId())
                 .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_AGE))
                 .withIssuer(request.getRequestURL().toString())
+                .withClaim("roles", userEntity.getRoles().stream().map(Enum::name).collect(Collectors.toList()))
                 .sign(Algorithm.HMAC256(SECRET_KEY.getBytes())));
     }
 
