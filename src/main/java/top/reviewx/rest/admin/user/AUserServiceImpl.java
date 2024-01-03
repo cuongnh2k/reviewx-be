@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import top.reviewx.core.common.CommonListResponse;
-import top.reviewx.mapper.UserMapper;
+import top.reviewx.core.exception.BusinessLogicException;
 import top.reviewx.entities.user.UserEntity;
+import top.reviewx.mapper.UserMapper;
 import top.reviewx.rest.user.user.dto.res.UserRes;
 
 import java.util.stream.Collectors;
@@ -41,5 +42,11 @@ public class AUserServiceImpl implements AUserService {
                 .totalPages(userEntityPage.getTotalPages())
                 .totalElements(userEntityPage.getTotalElements())
                 .build();
+    }
+
+    @Override
+    public void deleteUser(String userId) {
+        UserEntity userEntity = aUserRepository.findById(userId).orElseThrow(BusinessLogicException::new);
+        aUserRepository.delete(userEntity);
     }
 }

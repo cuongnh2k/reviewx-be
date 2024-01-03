@@ -26,4 +26,11 @@ public class AUserController {
                 isActive,
                 new PageableUtil().buildPageable(pageNumber, pageSize, sort)));
     }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<CommonResponse> deleteUser(@PathVariable String userId,
+                                                     @RequestHeader(name = "api-key") @NotBlank String apiKey) {
+        aUserService.deleteUser(userId);
+        return CommonResponse.success("");
+    }
 }

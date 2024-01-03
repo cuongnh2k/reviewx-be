@@ -7,4 +7,6 @@ import top.reviewx.rest.user.user.dto.res.UserRes;
 public interface AUserService {
 
     CommonListResponse<UserRes> getListUser(String name, Boolean isActive, Pageable pageable);
+
+    void deleteUser(String userId);
 }
